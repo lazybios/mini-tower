@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password: root
+  password:
   socket: /var/run/mysqld/mysqld.sock
 
 development:
@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: mini-tower_production
-  username: mini-tower
-  password: <%= ENV['MINI-TOWER_DATABASE_PASSWORD'] %>
+  username: <%= ENV['MINI_TOWER_DATABASE_USERNAME'] %>
+  password: <%= ENV['MINI_TOWER_DATABASE_PASSWORD'] %>
