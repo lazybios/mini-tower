@@ -1,7 +1,7 @@
 class TodoController < ApplicationController
 
   def index
-    @todos = Todo.all.order("finished asc, id asc")
+    @todos = Todo.all.order("finished asc, id desc")
     #查询当前项目下的用户 通过权限控制表
     @users = User.all()
   end
@@ -41,7 +41,7 @@ class TodoController < ApplicationController
         Event.create(event_type: 6, user_id: 1, todo_id: t.id, project_id: t.project_id, final_deadline: t.deadline, last_deadline: last_deadline)
       end
 
-      redirect_to root_url
+      redirect_to :back
     else
       render plain: 'modify deadline  faild'
     end
@@ -71,7 +71,7 @@ class TodoController < ApplicationController
         Event.create(event_type: 5, user_id: 1, todo_id: t.id, project_id: t.project_id, assign_user_id: t.assign_user_id, last_assign_user_id: last_assign_user_id)
       end
 
-      redirect_to root_url
+      redirect_to :back
     else
       render plain: 'task assigin faild'
     end
@@ -86,6 +86,7 @@ class TodoController < ApplicationController
 
   def edit
     @todo = Todo.find(params[:id])
+    @users = User.all()
   end
 
   def update

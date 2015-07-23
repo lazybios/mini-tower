@@ -1,26 +1,24 @@
 <% @events.each do |e| %>
-    <%= time_ago_in_words(e.created_at) %>
-
     <% case e.event_type  when 7%>
-        <p> <strong> <%= e.user.nickname %> </strong> 回复了任务 : <%= e.todo.content %> </p>
-        <p><%= e.comment.content %></p>
+        <p> <span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span><strong> <%= e.user.nickname %> </strong> 回复了任务 : <%= e.todo.content %> </p>
+        <p class="event-comment"><%= e.comment.content %></p>
     <% when 6 %>
-        <p> <strong> <%= e.user.nickname %> </strong> 将任务完成时间从 : <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 将任务完成时间从 <%= e.last_deadline.blank? ? '没有截止日期' : time_ago_in_words(e.last_deadline)  %>后  修改为 <%= time_ago_in_words(e.final_deadline) %>后: <%= e.todo.content %> </p>
 
     <% when 5 %>
-        <p> <strong> <%= e.user.nickname %> </strong> 把 <%= username(e.todo.last_assign_user_id) %> 的任务指派给了 <%= username(e.todo.assign_user_id) %> : <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 把 <%= username(e.last_assign_user_id) %> 的任务指派给了 <%= username(e.todo.assign_user_id) %> : <%= e.todo.content %> </p>
 
     <% when 4 %>
-        <p> <strong> <%= e.user.nickname %> </strong> 给 <%= username(e.todo.assign_user_id) %> 指派了任务: <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 给 <%= username(e.todo.assign_user_id) %> 指派了任务: <%= e.todo.content %> </p>
 
     <% when 3 %>
-        <p> <strong> <%= e.user.nickname %> </strong> 完成了任务: <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 完成了任务: <%= e.todo.content %> </p>
 
     <% when 2 %>
-        <p> <strong> <%= e.user.nickname %> </strong> 删除了任务: <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 删除了任务: <%= e.todo.content %> </p>
 
     <% when 1 %>
-        <p> <strong> <%= e.user.nickname %> </strong> 删除了任务: <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 删除了任务: <%= e.todo.content %> </p>
 
     <% end %>
 

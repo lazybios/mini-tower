@@ -30,6 +30,6 @@ module ApplicationHelper
   end
 
   def username(uid)
-    User.find(uid).nickname
+    uid.blank? ? 'None' :User.find(uid).nickname
   end
 end

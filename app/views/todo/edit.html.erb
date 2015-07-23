@@ -1,7 +1,18 @@
         <div class="box post">
             <h2>修改</h2>
             <%=form_tag todo_path(@todo), :method => :put do |f| %>
-                <p><%= text_field_tag(:content,nil,value: @todo.content) %></p>
+                <p><%= text_field_tag(:content,nil,value: @todo.content, class: 'long_txt')%></p>
                 <p><%= submit_tag("提交") %></p>
+            <% end %>
+            <%= form_tag("/todo/assign/"+@todo.id.to_s, method: "post") do %>
+                <p class="todo-operation">
+                分配: <%= select('assign', "user_id", @users.collect{|u| [u.nickname, u.id]}, {include_blank: 'None'}, onchange: "this.form.submit();") %> 当前完成者: <span class="todo-keypoint"><%= username(@todo.assign_user_id) %></span>
+                </p>
+            <% end %>
+            <%= form_tag("/todo/deadline/"+@todo.id.to_s, method: "post") do %>
+                <p class="todo-operation">
+                    截止日期: <%= text_field_tag(:deadline, nil, placeholder: 'xxxx-xx-xx xx:xx:xx') %> <%= submit_tag("修改") %> 当前截止日期: <span class="todo-keypoint"><%= time_ago_in_words(@todo.deadline) %> 后</span>
+
+                </p>
             <% end %>
         </div>

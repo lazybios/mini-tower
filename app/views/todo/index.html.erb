@@ -1,28 +1,70 @@
 <% @todos.each do  |t| %>
-    <%= link_to t.content, "/todo/" + t.id.to_s %>
-    <%= link_to '删除', "/todo/" + t.id.to_s, :method => 'delete', :data => {confirm: "删除后不可恢复，确定?"} %>
-    <%= link_to '修改', "/todo/"+ t.id.to_s + "/edit" %>
-    <%= link_to '完成', "/todo/finish/"+ t.id.to_s + "?status=yes" %>
-    <% if t.assign_user_id.blank? %>
-        <%= form_tag("/todo/assign/"+t.id.to_s, method: "post") do %>
-            <%= select('assign', "user_id", @users.collect{|u| [u.nickname, u.id]}, {include_blank: 'None'}) %> 
-            <%= submit_tag("分配") %>
+     <% if t.finished == 0 %>
+        <%= link_to t.content, "/todo/" + t.id.to_s, :class => 'todo-title' %>
+        <%= link_to '完成', "/todo/finish/"+ t.id.to_s + "?status=yes" %>
+        <%= link_to '修改', "/todo/"+ t.id.to_s + "/edit" %>
+        <%= link_to '删除', "/todo/" + t.id.to_s, :method => 'delete', :data => {confirm: "删除后不可恢复，确定?"} %>
+        <% if t.assign_user_id.blank? %>
+            <%= form_tag("/todo/assign/"+t.id.to_s, method: "post") do %>
+                <p class="todo-sumary">
+                分配: <%= select('assign', "user_id", @users.collect{|u| [u.nickname, u.id]}, {include_blank: 'None'}, onchange: "this.form.submit();") %> 
+                </p>
+            <% end %>
+        <% else %>
+            <p class="todo-sumary">
+                已分配给:<span class="todo-assign-name"> <%= username(t.assign_user_id) %></span> 
+            </p>
         <% end %>
-    <% else %>
-        已分配给: <%= t.assign_user_id %>
-    <% end %>
-    <% if t.deadline.blank? %>
-        <%= form_tag("/todo/deadline/"+t.id.to_s, method: "post") do %>
-            <p>截止日期:<%= text_field_tag(:deadline, nil) %> <%= submit_tag("添加") %></p>
+        <% if t.deadline.blank? %>
+            <%= form_tag("/todo/deadline/"+t.id.to_s, method: "post") do %>
+                <p class="todo-sumary">
+                    截止日期: <%= text_field_tag(:deadline, nil, placeholder: 'xxxx-xx-xx xx:xx:xx') %> <%= submit_tag("修改") %></p>
+                </p>
+            <% end %>
+        <% else %>
+                <p class="todo-sumary">
+                    截止日期: <span class="todo-deadline"><%= time_ago_in_words(t.deadline) %></span> 后
+                </p>
         <% end %>
-    <% else %>
-            截止日期: <%= t.deadline %>
+        <br />
     <% end %>
-    <br />
+     <% if t.finished == 1 %>
+         <del><%= link_to t.content, "/todo/" + t.id.to_s, :class => 'todo-title todo-done' %></del>
+         <%= link_to '恢复', "/todo/finish/"+ t.id.to_s + "?status=no" , :class => "todo-done" %>
+        <%= link_to '修改', "/todo/"+ t.id.to_s + "/edit" , :class => "todo-done" %>
+        <%= link_to '删除', "/todo/" + t.id.to_s, :method => 'delete', :data => {confirm: "删除后不可恢复，确定?"} , :class => "todo-done" %>
+        <% if t.assign_user_id.blank? %>
+            <%= form_tag("/todo/assign/"+t.id.to_s, method: "post") do %>
+                <p class="todo-sumary">
+                    分配: <%= select('assign', "user_id", @users.collect{|u| [u.nickname, u.id]}, {include_blank: 'None'}, onchange: "this.form.submit();", :class => "todo-done") %> 
+                </p>
+            <% end %>
+        <% else %>
+            <p class="todo-sumary todo-done">
+                已分配给:<span class="todo-assign-name"> <%= username(t.assign_user_id) %></span> 
+            </p>
+        <% end %>
+        <% if t.deadline.blank? %>
+            <%= form_tag("/todo/deadline/"+t.id.to_s, method: "post") do %>
+                <p class="todo-sumary todo-done">
+                    截止日期: <%= text_field_tag(:deadline, nil, placeholder: 'xxxx-xx-xx xx:xx:xx') %> <%= submit_tag("修改") %></p>
+                </p>
+            <% end %>
+        <% else %>
+                <p class="todo-sumary todo-done">
+                    截止日期: <span class="todo-deadline"><%= time_ago_in_words(t.deadline) %></span> 后
+                </p>
+        <% end %>
+        <br />
+    <% end %>
 <% end %>
 
+<div class="box post">
 <h3>添加任务</h3>
 <%= form_tag("/todo/new", method: "post") do %>
-    <p><%= text_field_tag(:content, nil) %></p>
-    <p><%= submit_tag("添加") %></p>
+    <p><%= text_field_tag(:content, nil, class: "long_txt") %></p>
+    <p><%= submit_tag("添加",class: "todo-submit") %></p>
 <% end %>
+<div>
+
+</div>
