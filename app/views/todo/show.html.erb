@@ -1,0 +1,20 @@
+<h3>任务详情:</h3>
+<p><%= @todo.content %></p>
+
+
+<h3>评论</h3>
+
+<% @comments.each do |c| %>
+    <h5><%= c.user_id %></h5>
+    <p><%= c.content %></p>
+<% end %>
+
+
+评论列表展示
+
+<%= form_tag("/comment/new", method: "post") do %>
+    <textarea name="content" id="" rows="8" cols="40"></textarea>
+    <p><input type="hidden" name="todo_id" id="" value="<%= @todo.id %>" /></p>
+    <p> <input type="submit" name="" id="" value="评论" /> </p>
+<% end %>
+

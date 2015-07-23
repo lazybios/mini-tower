@@ -1,0 +1,13 @@
+<% @todos.each do  |t| %>
+    <%= link_to t.content, "/todo/" + t.id.to_s %>
+    <%= link_to '删除', "/todo/" + t.id.to_s, :method => 'delete', :data => {confirm: "删除后不可恢复，确定?"} %>
+    <%= link_to '修改', "/todo/"+ t.id.to_s + "/edit" %>
+    <%= link_to '完成', "/todo/finish/"+ t.id.to_s + "?status=yes" %>
+    <br />
+<% end %>
+
+<h3>添加任务</h3>
+<%= form_tag("/todo/new", method: "post") do %>
+    <p><%= text_field_tag(:content, nil) %></p>
+    <p><%= submit_tag("添加") %></p>
+<% end %>
