@@ -3,6 +3,21 @@
     <%= link_to '删除', "/todo/" + t.id.to_s, :method => 'delete', :data => {confirm: "删除后不可恢复，确定?"} %>
     <%= link_to '修改', "/todo/"+ t.id.to_s + "/edit" %>
     <%= link_to '完成', "/todo/finish/"+ t.id.to_s + "?status=yes" %>
+    <% if t.assign_user_id.blank? %>
+        <%= form_tag("/todo/assign/"+t.id.to_s, method: "post") do %>
+            <%= select('assign', "user_id", @users.collect{|u| [u.nickname, u.id]}, {include_blank: 'None'}) %> 
+            <%= submit_tag("分配") %>
+        <% end %>
+    <% else %>
+        已分配给: <%= t.assign_user_id %>
+    <% end %>
+    <% if t.deadline.blank? %>
+        <%= form_tag("/todo/deadline/"+t.id.to_s, method: "post") do %>
+            <p>截止日期:<%= text_field_tag(:deadline, nil) %> <%= submit_tag("添加") %></p>
+        <% end %>
+    <% else %>
+            截止日期: <%= t.deadline %>
+    <% end %>
     <br />
 <% end %>
 

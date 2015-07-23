@@ -10,8 +10,11 @@ Rails.application.routes.draw do
   get '/todo/:id/edit' => 'todo#edit'
   put '/todo/:id' => 'todo#update', as: "todo"
   get '/todo/:id' => 'todo#show'
-
+  post '/todo/assign/:id' => 'todo#assigned'
+  post '/todo/deadline/:id' => 'todo#set_deadline'
   post '/comment/new' => 'comment#create'
+  
+  get '/events' => 'event#index'
 
 
 

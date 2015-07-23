@@ -11,12 +11,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723104828) do
+ActiveRecord::Schema.define(version: 20150723150947) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
     t.integer  "user_id"
     t.integer  "todo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.integer  "event_type"
+    t.integer  "todo_id"
+    t.integer  "last_assign_user_id"
+    t.integer  "assign_user_id"
+    t.datetime "last_deadline"
+    t.datetime "final_deadline"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+  end
+
+  create_table "project_users", force: true do |t|
+    t.integer  "porject_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "team_users", force: true do |t|
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", force: true do |t|
+    t.string   "team_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,6 +67,13 @@ ActiveRecord::Schema.define(version: 20150723104828) do
     t.datetime "deadline"
     t.integer  "user_id"
     t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "assign_user_id"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "nickname"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

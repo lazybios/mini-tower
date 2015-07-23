@@ -3,9 +3,8 @@
 
 
 <h3>评论</h3>
-
 <% @comments.each do |c| %>
-    <h5><%= c.user_id %></h5>
+    <h5><%= c.user.nickname %></h5>
     <p><%= c.content %></p>
 <% end %>
 
