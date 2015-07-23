@@ -8,4 +8,7 @@ class User < ActiveRecord::Base
 
   has_many :team_users
   has_many :teams, :through => :team_users
+
+  has_many :accesses
+  has_many :projects, :through => :accesses
 end
