@@ -11,8 +11,20 @@
             <% end %>
             <%= form_tag("/todo/deadline/"+@todo.id.to_s, method: "post") do %>
                 <p class="todo-operation">
-                    截止日期: <%= text_field_tag(:deadline, nil, placeholder: 'xxxx-xx-xx xx:xx:xx') %> <%= submit_tag("修改") %> 当前截止日期: <span class="todo-keypoint"><%= time_ago_in_words(@todo.deadline) %> 后</span>
+                    截止日期: <%= text_field_tag(:deadline, nil, placeholder: 'xxxx-xx-xx xx:xx:xx') %> <%= submit_tag("修改") %> 当前截止日期: <span class="todo-keypoint"><%= @todo.deadline.blank? ? '未设定' : time_ago_in_words(@todo.deadline) + '后' %> </span>
 
                 </p>
             <% end %>
+            <h3>评论</h3>
+            <% @comments.each do |c| %>
+                <p><strong><%= c.user.nickname %>:</strong></p>
+                <p class="todo-comment"><%= c.content %></p>
+            <% end %>
+            <div>
+                <%= form_tag("/comment/new", method: "post") do %>
+                    <textarea name="content" id="" rows="8" cols="40"></textarea>
+                    <p><input type="hidden" name="todo_id" id="" value="<%= @todo.id %>" /></p>
+                    <p> <input type="submit" name="" id="" value="评论" /> </p>
+                <% end %>
+            </div>
         </div>

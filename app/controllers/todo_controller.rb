@@ -76,6 +76,7 @@ class TodoController < ApplicationController
 
   def edit
     @todo = Todo.find(params[:id])
+    @comments = @todo.comments
     @users = User.all()
   end
 

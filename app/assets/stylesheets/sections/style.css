@@ -60,3 +60,4 @@ a:hover { color:#FF3300; }
 .event-time {color: #d35400; font-size: 14px;}
 .todo-keypoint {color: #7f8c8d;}
 .todo-done {color: #999;}
+.todo-comment { text-indent: 2em;}
