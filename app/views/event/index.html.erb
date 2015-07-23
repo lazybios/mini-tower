@@ -3,7 +3,7 @@
         <p> <span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span><strong> <%= e.user.nickname %> </strong> 回复了任务 : <%= e.todo.content %> </p>
         <p class="event-comment"><%= e.comment.content %></p>
     <% when 6 %>
-        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 将任务完成时间从 <%= e.last_deadline.blank? ? '没有截止日期' : time_ago_in_words(e.last_deadline)  %>后  修改为 <%= time_ago_in_words(e.final_deadline) %>后: <%= e.todo.content %> </p>
+        <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 将任务完成时间从 <%= e.last_deadline.blank? ? '没有截止日期' : time_ago_in_words(e.last_deadline)  %>后  修改为 <%= time_ago_in_words(e.todo.deadline) %>后: <%= e.todo.content %> </p>
 
     <% when 5 %>
         <p><span class="event-time"><%= time_ago_in_words(e.created_at) %> 前</span> <strong> <%= e.user.nickname %> </strong> 把 <%= username(e.last_assign_user_id) %> 的任务指派给了 <%= username(e.todo.assign_user_id) %> : <%= e.todo.content %> </p>

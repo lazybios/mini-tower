@@ -24,23 +24,13 @@ class TodoController < ApplicationController
       render plain: 'the task id invalid'
     end
 
-    if t.deadline.blank?
-      is_first_assign = true
-    else
-      is_first_assign = false
-      last_deadline = t.deadline
-    end
+    last_deadline = t.deadline
+
     deadline_time = DateTime.parse(params['deadline'])
     t.deadline = deadline_time
 
     if t.save
-      #current user
-      if is_first_assign
-        Event.create(event_type: 6, user_id: 1, todo_id: t.id, project_id: t.project_id, final_deadline: t.deadline)
-      else
-        Event.create(event_type: 6, user_id: 1, todo_id: t.id, project_id: t.project_id, final_deadline: t.deadline, last_deadline: last_deadline)
-      end
-
+      Event.create(event_type: 6, user_id: 1, todo_id: t.id, project_id: t.project_id,  last_deadline: last_deadline)
       redirect_to :back
     else
       render plain: 'modify deadline  faild'
@@ -66,9 +56,9 @@ class TodoController < ApplicationController
     if t.save
       #current user
       if is_first_assign
-        Event.create(event_type: 4, user_id: 1, todo_id: t.id, project_id: t.project_id, assign_user_id: t.assign_user_id)
+        Event.create(event_type: 4, user_id: 1, todo_id: t.id, project_id: t.project_id)
       else
-        Event.create(event_type: 5, user_id: 1, todo_id: t.id, project_id: t.project_id, assign_user_id: t.assign_user_id, last_assign_user_id: last_assign_user_id)
+        Event.create(event_type: 5, user_id: 1, todo_id: t.id, project_id: t.project_id, last_assign_user_id: last_assign_user_id)
       end
 
       redirect_to :back
@@ -120,7 +110,6 @@ class TodoController < ApplicationController
     end
 
     if t.save
-      # 通知事件
       #current_user
       Event.create(event_type: 3, user_id: 1, todo_id: t.id, project_id: t.project_id)
       redirect_to root_url

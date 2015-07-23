@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723150947) do
+ActiveRecord::Schema.define(version: 20150723200738) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -27,9 +27,7 @@ ActiveRecord::Schema.define(version: 20150723150947) do
     t.integer  "event_type"
     t.integer  "todo_id"
     t.integer  "last_assign_user_id"
-    t.integer  "assign_user_id"
     t.datetime "last_deadline"
-    t.datetime "final_deadline"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
